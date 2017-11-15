@@ -45,37 +45,31 @@ public enum Parameter implements Parameterized{
 
 - **HelloWorldParser.java**:
 ```java
-public enum Parameter implements Parameterized{
-    @ParameterOption(shortKey = "h")
-    HELP(new HelpParameterExecutable()),
+public class HelloWorldParser extends Parser<Parameter>{
+	
+	/**
+	 * Coonstructor
+	 * @param args Argumetnos psados en el main
+	 * @throws ParameterizedParserException
+	 */
+	public HelloWorldParser(String[] args) throws ParameterizedParserException {
+		super(args);
+	}
 
-    @ParameterOption(shortKey="pa", hasArgs=true)
-    @ParameterNotEmpty
-    PARAM_A(new SimpleParameterExecutable()),
+	@Override
+	public String getHelpHeader() {
+		return "Cabecera de ejemplo";
+	}
 
-    @ParameterOption(shortKey="pb", description="El programa saluda al mundo")
-    PARAM_B(new ParameterExecutable(){
-        public Object executeFunction(String value) {
-            System.out.println("Hola mundo");
-            return null;
-        }
-    });
+	@Override
+	public String getHelpFooter() {
+		return "Footer de ejemplo";
+	}
 
-    /** Constructor */
-    private Parameter(ParameterExecutable exedcutable) {
-        this.executable = exedcutable;
-    }
-
-    /** Función a ejecutar si se incluye el comando definido en el enumerado*/
-    private ParameterExecutable executable;
-
-    // ACCEDENTES
-    public String getName() {
-        return this.name().toLowerCase();
-    }
-    public ParameterExecutable getParameterExecutable() {
-        return executable;
-    }
+	@Override
+	public String getAppName() {
+		return "MyApp";
+	}
 }
 ```
 
